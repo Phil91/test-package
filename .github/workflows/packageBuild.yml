@@ -1,0 +1,60 @@
+# yaml-language-server: $schema=https://json.schemastore.org/github-workflow.json
+name: NuGet Package Build
+on:
+  workflow_dispatch: # Allow running the workflow manually from the GitHub UI
+
+env:
+  DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
+  DOTNET_NOLOGO: true
+  NuGetDirectory: ${{ github.workspace}}/nuget
+
+defaults:
+  run:
+    shell: pwsh
+
+jobs:
+  create_nuget:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        dotnet-version: ['7.0']
+
+    steps:
+    - uses: actions/checkout@v3
+
+    # Install the .NET SDK
+    - name: Set up .NET Core SDK  ${{ matrix.dotnet-version }}
+      uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: ${{ matrix.dotnet-version }}
+
+    # Create the NuGet package in the folder from the environment variable NuGetDirectory
+    - run: dotnet pack src/framework/TestPackage.Framework/TestPackage.Framework.csproj -c Release -o ${{ env.NuGetDirectory }}
+
+    # Publish the NuGet package as an artifact, so they can be used in the following jobs
+    - uses: actions/upload-artifact@v3
+      with:
+        name: nuget
+        if-no-files-found: error
+        retention-days: 7
+        path: ${{ env.NuGetDirectory }}/*.nupkg
+
+  deploy:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        dotnet-version: ['7.0']
+
+    needs: [ create_nuget ]
+    steps:  
+    #Push NuGet package to GitHub packages
+    - name: Download nuget package artifact
+      uses: actions/download-artifact@v1.0.0
+      with:
+        name: nuget
+        path: ${{ env.NuGetDirectory }}
+    - name: Prep packages
+      run: dotnet nuget add source --username ${{ github.repository_owner }} --password ${{ secrets.API_KEY }} --store-password-in-clear-text --name github "https://nuget.pkg.github.com/${{ github.repository_owner }}/index.json"
+    - name: Push package to GitHub packages
+      run: dotnet nuget push ${{ env.NuGetDirectory }}/*.nupkg --api-key ${{ secrets.API_KEY }} --source "github"
+ 
