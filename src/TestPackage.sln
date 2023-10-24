@@ -6,6 +6,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "framework", "framework", "{
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestPackage.Framework", "framework\TestPackage.Framework\TestPackage.Framework.csproj", "{95057933-3203-4328-A1E7-97D27F9B2CCD}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestPackage.Framework.Consolidation", "framework\TestPackage.Framework.Consolidation\TestPackage.Framework.Consolidation.csproj", "{08B4261C-2C68-4223-A870-C4F7E3AFAE32}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -20,8 +22,13 @@ Global
 		{95057933-3203-4328-A1E7-97D27F9B2CCD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{95057933-3203-4328-A1E7-97D27F9B2CCD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{95057933-3203-4328-A1E7-97D27F9B2CCD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{08B4261C-2C68-4223-A870-C4F7E3AFAE32}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{08B4261C-2C68-4223-A870-C4F7E3AFAE32}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{08B4261C-2C68-4223-A870-C4F7E3AFAE32}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{08B4261C-2C68-4223-A870-C4F7E3AFAE32}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{95057933-3203-4328-A1E7-97D27F9B2CCD} = {11C163EC-75D2-47D0-8B99-BFD26B290010}
+		{08B4261C-2C68-4223-A870-C4F7E3AFAE32} = {11C163EC-75D2-47D0-8B99-BFD26B290010}
 	EndGlobalSection
 EndGlobal

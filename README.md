@@ -1,1 +1,1 @@
-Only a test project
+Only a test project to test nuget packages
